@@ -33,15 +33,24 @@
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">GET-Zero</h1>
+          <h1 class="title is-1 publication-title" style="margin: 0">GET-Zero</h1>
           <h1 class="title is-3 publication-title">Graph Embodiment Transformer for<br>Zero-shot Embodiment Generalization</h1>
         </div>
+      </div>
+      <div class="center">
+        <video id="teaser" loop autoplay width="80%" class="center">
+          <source src="static/videos/model_teaser.mp4"
+                  type="video/mp4">
+        </video>
+        <h2 class="subtitle has-text-centered">
+          GET-Zero enables zero-shot control of previously unseen robot designs.
+        </h2>
       </div>
     </div>
   </div>
 </section>
 
-<section class="section">
+<section class="section no_top_pad">
   <div class="container is-max-desktop">
     <!-- Abstract. -->
     <div class="columns is-centered has-text-centered">
@@ -50,10 +59,7 @@
         <div class="content has-text-justified">
           <p>
             This paper introduces GET-Zero, a model architecture and training procedure for learning an embodiment-aware control policy that can immediately adapt to new hardware changes without retraining. 
-            To do so, we present Graph Embodiment Transformer (GET), a transformer model that leverages the embodiment graph connectivity as a learned structural bias in the attention mechanism. We use behavior cloning to distill demonstration data from embodiment-specific expert policies into an embodiment-aware GET model that conditions on the hardware configuration of the robot to make control decisions.
-          </p>
-          <p>
-            We conduct a case study on a dexterous in-hand object rotation task using different configurations of a four-fingered robot hand with joints removed and with link length extensions. Using the GET model along with a self-modeling loss enables GET-Zero to zero-shot generalize to unseen variation in graph structure and link length, yielding a 20% improvement over baseline methods.
+            To do so, we present Graph Embodiment Transformer (GET), a transformer model that leverages the embodiment graph connectivity as a learned structural bias in the attention mechanism. We use behavior cloning to distill demonstration data from embodiment-specific expert policies into an embodiment-aware GET model that conditions on the hardware configuration of the robot to make control decisions. We conduct a case study on a dexterous in-hand object rotation task using different configurations of a four-fingered robot hand with joints removed and with link length extensions. Using the GET model along with a self-modeling loss enables GET-Zero to zero-shot generalize to unseen variation in graph structure and link length, yielding a 20% improvement over baseline methods.
           </p>
         </div>
       </div>
@@ -65,7 +71,7 @@
       <div class="column is-four-fifths">
         <h2 class="title is-3">Video</h2>
         <div class="publication-video">
-          <video id="teaser" controls height="100%">
+          <video id="teaser" poster="static/images/teaser_video_poster.png" controls height="100%">
             <source src="https://github.com/GET-Zero/GET-Zero.github.io/raw/main/static/videos/teaser.mp4"
                     type="video/mp4">
           </video>
@@ -73,6 +79,119 @@
       </div>
     </div>
     <!--/ Paper video. -->
+  </div>
+</section>
+
+<section class="section no_top_pad">
+  <div class="container is-max-desktop">
+    <!-- Result videos. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Results</h2>
+
+        <!-- 001 -->
+        <div class="content has-text-justified">
+          <p>
+            For the original hand design (seen during training), GET-Zero achieves higher average rotational velocity relative to the baseline. GET-Zero includes a graph encoding of the embodiment structure and a self-modeling meta-task that predicts forward kinematics of each joint, both of which yield better performance. The baseline does not have either of these features.
+          </p>
+          <div id="wrapper"> 
+            <video id="home1" autoplay muted loop playsinline> 
+                <source type="video/mp4" src="./static/videos/get_ar_tag/001.mp4" /> 
+            </video>
+            <video id="home2" autoplay muted loop playsinline> 
+                <source type="video/mp4" src="./static/videos/et_ar_tag/001.mp4" /> 
+            </video>
+            <div class="clear"></div> 
+            <div>
+              <p class="subtitle has-text-centered left">GET-Zero (Ours) - 21 degrees/second</p>
+              <p class="subtitle has-text-centered right">ET (Baseline) - 12 degrees/second</p>
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        <!-- 139 -->
+        <div class="content has-text-justified">
+          <p>
+            For an embodiment not seen during training with a missing middle finger and a shortened thumb, GET-Zero again outperforms the baseline. We observe that the baseline struggles to keep the cube in a stable pose, in part due to having no knowledge of the embodiment graph structure.
+          </p>
+          <div id="wrapper"> 
+            <video id="home1" autoplay muted loop playsinline> 
+                <source type="video/mp4" src="./static/videos/get_ar_tag/139.mp4" /> 
+            </video>
+            <video id="home2" autoplay muted loop playsinline> 
+                <source type="video/mp4" src="./static/videos/et_ar_tag/139.mp4" /> 
+            </video>
+            <div class="clear"></div> 
+            <div>
+              <p class="subtitle has-text-centered left">GET-Zero (Ours) - 22 degrees/second</p>
+              <p class="subtitle has-text-centered right">ET (Baseline) - 9 degrees/second</p>
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        <!-- 605 -->
+        <div class="content has-text-justified">
+          <p>
+            During training time, we train on a variety of hands with joints and links removed. Despite never training on any link length variations, we observe that GET-Zero is able to still control a hand with 1.5cm extensions (shown in orange). In contrast, the baseline does not rotate the cube as fast and drops the cube more frequently.
+          </p>
+          <div id="wrapper"> 
+            <video id="home1" autoplay muted loop playsinline> 
+                <source type="video/mp4" src="./static/videos/get_ar_tag/605.mp4" /> 
+            </video>
+            <video id="home2" autoplay muted loop playsinline> 
+                <source type="video/mp4" src="./static/videos/et_ar_tag/605.mp4" /> 
+            </video>
+            <div class="clear"></div> 
+            <div>
+              <p class="subtitle has-text-centered left">GET-Zero (Ours) - 19 degrees/second</p>
+              <p class="subtitle has-text-centered right">ET (Baseline) - 9 degrees/second</p>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <!-- Result videos. -->
+  </div>
+</section>
+
+<section class="section no_top_pad">
+  <div class="container is-max-desktop">
+    <!-- Result videos. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Failure Cases</h2>
+
+        <!-- 584 -->
+        <div class="content has-text-justified">
+          <p>
+            The sim-to-real zero-shot control of a previously unseen embodiment is challenging for contact-rich tasks, especially with both graph and link length variations present. We observe a few failure cases with GET-Zero.
+          </p>
+          <div id="wrapper"> 
+            <div>
+              <p>The hand below has a missing index finger that creates a gap where the cube can fall through. This compounds any control errors which can come from the fact that link length extensions were never seen during training.</p>
+            </div>
+            <video id="home3" autoplay muted loop playsinline> 
+                <source type="video/mp4" src="./static/videos/get_ar_tag/584.mp4" /> 
+            </video>
+            <div class="clear"></div> 
+            <div class="clear"></div>
+        </div>
+
+        <br>
+
+        <!-- 585 -->
+        <div class="content has-text-justified">
+          <div id="wrapper"> 
+            <div>
+              <p style="margin-bottom: 7px;">Next, a hand with many link length extensions and a graph structure not seen during training has difficulty stabilizing the cube during the rotation cycle. This is partially due to a pinky finger that only has a single joint, making it difficult to start rotating the cube. Additionally, GET-Zero uses a proprioception-only input (no explicit cube state) to minimize the sim-to-real gap, but this makes it challenging for the policy to adapt to repeated failures.</p>
+            </div>
+            <video id="home3" autoplay muted loop playsinline> 
+                <source type="video/mp4" src="./static/videos/get_ar_tag/585.mp4" /> 
+            </video>
+            <div class="clear"></div> 
+            <div class="clear"></div>
+        </div>
+    </div>
+    <!-- Result videos. -->
   </div>
 </section>
 

@@ -150,3 +150,53 @@ body {
 #interpolation-image-wrapper img {
   border-radius: 5px;
 }
+
+.center {
+  display: block;
+  margin: 0 auto;
+}
+
+.no_top_pad {
+  padding-top: 0px;
+  margin-top: 0px;
+}
+
+#wrapper { 
+  width: 100%; 
+  height: auto; 
+  margin: 0 auto;
+}
+
+#home1 { 
+  width: 48%; 
+  float: left; 
+  margin-right: 4%;
+  border-radius: 10px;
+} 
+
+#home2 { 
+  width: 48%; 
+  float: left;
+  border-radius: 10px;
+}
+
+#home3 {
+  width: 48%; 
+  border-radius: 10px;
+  display: block;
+  margin: 0 auto;
+}
+
+.clear{
+  clear: both;
+}
+
+.left {
+  float: left;
+  width: 48%;
+}
+
+.right {
+  float: right;
+  width: 48%;
+}
