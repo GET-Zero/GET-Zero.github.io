@@ -35,16 +35,19 @@
         <div class="column has-text-centered">
           <h1 class="title is-1 publication-title" style="margin: 0">GET-Zero</h1>
           <h1 class="title is-3 publication-title">Graph Embodiment Transformer for<br>Zero-shot Embodiment Generalization</h1>
+
+          <div class="center">
+            <video id="model_teaser" loop autoplay muted width="80%" class="center">
+              <source src="static/videos/model_teaser.mp4"
+                      type="video/mp4">
+            </video>
+            <h2 class="subtitle has-text-centered" style="width: 80%; margin: auto;">
+              GET-Zero enables zero-shot control of previously unseen robot designs using a single set of network weights.
+            </h2>
+          </div>
+          
+
         </div>
-      </div>
-      <div class="center">
-        <video id="model_teaser" loop autoplay muted width="80%" class="center">
-          <source src="static/videos/model_teaser.mp4"
-                  type="video/mp4">
-        </video>
-        <h2 class="subtitle has-text-centered">
-          GET-Zero enables zero-shot control of previously unseen robot designs.
-        </h2>
       </div>
     </div>
   </div>
@@ -84,15 +87,38 @@
 
 <section class="section no_top_pad">
   <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Graph Embodiment Transformer (GET)</h2>
+        <div class="content has-text-justified">
+          <img src="static/images/architecture.png" style="width: 100%; margin-bottom: 4px;">
+          <p>
+            We introduce Graph Embodiment Transformer (GET), and embodiment-aware policy architecture based on the transformer encoder that makes control decisions according to the robot hardware configuration. We start with an embodiment graph (left) whichs consists of joints as nodes and links as directed edges. Next, we construct separate transformer tokens for each joint, which contain local state and hardware information. These joint tokens then communicate through a modified attention mechanism in the transformer encoder. In particular, we use both undirected (Spatial Bias) and directed (Parent-Child Bias) graph features as a structural bias in the attention scores of the self-attention layers. The main idea is to modulate the communication between joints according to how they are connected in the robot. Lastly, the model outputs per-joint actions and forward kinematics pose estimates for each joint (self-modeling). We observe that self-modeling is a useful meta task that improves zero-shot embodiment generalization.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section no_top_pad">
+  <div class="container is-max-desktop">
     <!-- Result videos. -->
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
         <h2 class="title is-3">Results</h2>
 
-        <!-- 001 -->
         <div class="content has-text-justified">
           <p>
-            For the original hand design (seen during training), GET-Zero achieves higher average rotational velocity relative to the baseline. GET-Zero includes a graph encoding of the embodiment structure and a self-modeling meta-task that predicts forward kinematics of each joint, both of which yield better performance. The baseline does not have either of these features.
+            We apply the embodiment-aware GET-Zero policy to an in-hand object rotation task where a dexterous hand continuously rotates a cube. In particular, we study this task for a range of hand designs with links and joints removed as well as link length extensions. With only a single set of network weights, GET-Zero is able to control a wide range of hand designs and generalize to new designs not seen during training. The main idea is that by conditioning our model on the hand design, we can create a policy that is aware of how each finger is structured and can act accordingly. Below, we present GET-Zero controlling hand configurations that are both seen and unseen at training time.
+          </p>
+        </div>
+
+        <!-- Training embodiments -->
+        <h3 class="title is-4" style="text-align: left;">Training Embodiments</h3>
+        <div class="content has-text-justified">
+          <p>
+            For the original hand design with all joints and links present (seen during training), GET-Zero achieves higher average rotational velocity relative to the baseline. The baseline has the same overall model architecture as GET, except without the graph encoding nor self-modeling.
           </p>
           <div id="wrapper"> 
             <video id="home1" autoplay muted loop playsinline> 
@@ -107,12 +133,80 @@
               <p class="subtitle has-text-centered right">ET (Baseline) - 12 degrees/second</p>
             </div>
             <div class="clear"></div>
+
+            <div>
+              <p>In simulation, we train on a set of 44 embodiments with different graph variations consisting of joints and links removed. We observe that GET-Zero achieves a 10% performance improvement over the baseline on these training embodiments, which enables our method to match the rotation performance (99%) of 44 embodiment-specific RL policies despite using a single set of network weights to control every design. Below, we show GET-Zero in simulation across a subset of the 44 training embodiments. Note the variations in the thumb and the three main fingers where joints and links have been removed to create shorter fingers.</p>
+            </div>
+            <div id="results-carousel" class="carousel results-carousel">
+              <div class="item item-train1">
+                <video poster="" id="train1" autoplay muted loop playsinline height="100%">
+                  <source src="./static/videos/train/1.mp4"
+                          type="video/mp4">
+                </video>
+              </div>
+              <div class="item item-train2">
+                <video poster="" id="train2" autoplay muted loop playsinline height="100%">
+                  <source src="./static/videos/train/2.mp4"
+                          type="video/mp4">
+                </video>
+              </div>
+              <div class="item item-train3">
+                <video poster="" id="train3" autoplay muted loop playsinline height="100%">
+                  <source src="./static/videos/train/3.mp4"
+                          type="video/mp4">
+                </video>
+              </div>
+              <div class="item item-train4">
+                <video poster="" id="train4" autoplay muted loop playsinline height="100%">
+                  <source src="./static/videos/train/4.mp4"
+                          type="video/mp4">
+                </video>
+              </div>
+              <div class="item item-train5">
+                <video poster="" id="train5" autoplay muted loop playsinline height="100%">
+                  <source src="./static/videos/train/5.mp4"
+                          type="video/mp4">
+                </video>
+              </div>
+              <div class="item item-train6">
+                <video poster="" id="train6" autoplay muted loop playsinline height="100%">
+                  <source src="./static/videos/train/6.mp4"
+                          type="video/mp4">
+                </video>
+              </div>
+              <div class="item item-train7">
+                <video poster="" id="train7" autoplay muted loop playsinline height="100%">
+                  <source src="./static/videos/train/7.mp4"
+                          type="video/mp4">
+                </video>
+              </div>
+              <div class="item item-train8">
+                <video poster="" id="train8" autoplay muted loop playsinline height="100%">
+                  <source src="./static/videos/train/8.mp4"
+                          type="video/mp4">
+                </video>
+              </div>
+              <div class="item item-train9">
+                <video poster="" id="train9" autoplay muted loop playsinline height="100%">
+                  <source src="./static/videos/train/9.mp4"
+                          type="video/mp4">
+                </video>
+              </div>
+              <div class="item item-train10">
+                <video poster="" id="train10" autoplay muted loop playsinline height="100%">
+                  <source src="./static/videos/train/10.mp4"
+                          type="video/mp4">
+                </video>
+              </div>
+            </div>
+            <p class="subtitle has-text-centered">GET-Zero control of training embodiments (using single GET network)</p>
         </div>
 
-        <!-- 139 -->
+        <!-- Unseen graph -->
+        <h3 class="title is-4" style="text-align: left;">Unseen Embodiment Graphs (Zero-shot)</h3>
         <div class="content has-text-justified">
           <p>
-            For an embodiment not seen during training with a missing middle finger and a shortened thumb, GET-Zero again outperforms the baseline. We observe that the baseline struggles to keep the cube in a stable pose, in part due to having no knowledge of the embodiment graph structure.
+            GET-Zero is capable of zero-shot control of hand designs not seen during training. In this section, we show performance on embodiments that have combinations of removed joints and links that were not seen during training (new graph variations). Below, we see GET-Zero outperforms the baseline for a previously unseen embodiment with a missing middle finger and a shortened thumb. We observe that the baseline struggles to keep the cube in a stable pose, in part due to having no knowledge of the embodiment graph structure.
           </p>
           <div id="wrapper"> 
             <video id="home1" autoplay muted loop playsinline> 
@@ -127,9 +221,76 @@
               <p class="subtitle has-text-centered right">ET (Baseline) - 9 degrees/second</p>
             </div>
             <div class="clear"></div>
+            <p>
+              In simulation, we evaluate across 10 embodiments with unseen graph variations and find that GET-Zero increases performance compared to the best performing baseline by 16%. Below, we include GET-Zero simulation results on these embodiments.
+            </p>
+            <div id="results-carousel" class="carousel results-carousel">
+              <div class="item item-newgraph1">
+                <video poster="" id="newgraph1" autoplay muted loop playsinline height="100%">
+                  <source src="./static/videos/new_graph/1.mp4"
+                          type="video/mp4">
+                </video>
+              </div>
+              <div class="item item-newgraph2">
+                <video poster="" id="newgraph2" autoplay muted loop playsinline height="100%">
+                  <source src="./static/videos/new_graph/2.mp4"
+                          type="video/mp4">
+                </video>
+              </div>
+              <div class="item item-newgraph3">
+                <video poster="" id="newgraph3" autoplay muted loop playsinline height="100%">
+                  <source src="./static/videos/new_graph/3.mp4"
+                          type="video/mp4">
+                </video>
+              </div>
+              <div class="item item-newgraph4">
+                <video poster="" id="newgraph4" autoplay muted loop playsinline height="100%">
+                  <source src="./static/videos/new_graph/4.mp4"
+                          type="video/mp4">
+                </video>
+              </div>
+              <div class="item item-newgraph5">
+                <video poster="" id="newgraph5" autoplay muted loop playsinline height="100%">
+                  <source src="./static/videos/new_graph/5.mp4"
+                          type="video/mp4">
+                </video>
+              </div>
+              <div class="item item-newgraph6">
+                <video poster="" id="newgraph6" autoplay muted loop playsinline height="100%">
+                  <source src="./static/videos/new_graph/6.mp4"
+                          type="video/mp4">
+                </video>
+              </div>
+              <div class="item item-newgraph7">
+                <video poster="" id="newgraph7" autoplay muted loop playsinline height="100%">
+                  <source src="./static/videos/new_graph/7.mp4"
+                          type="video/mp4">
+                </video>
+              </div>
+              <div class="item item-newgraph8">
+                <video poster="" id="newgraph8" autoplay muted loop playsinline height="100%">
+                  <source src="./static/videos/new_graph/8.mp4"
+                          type="video/mp4">
+                </video>
+              </div>
+              <div class="item item-newgraph9">
+                <video poster="" id="newgraph9" autoplay muted loop playsinline height="100%">
+                  <source src="./static/videos/new_graph/9.mp4"
+                          type="video/mp4">
+                </video>
+              </div>
+              <div class="item item-newgraph10">
+                <video poster="" id="newgraph10" autoplay muted loop playsinline height="100%">
+                  <source src="./static/videos/new_graph/10.mp4"
+                          type="video/mp4">
+                </video>
+              </div>
+            </div>
+            <p class="subtitle has-text-centered">GET-Zero zero-shot to unseen graph variations</p>
         </div>
 
-        <!-- 605 -->
+        <!-- Unseen link length -->
+        <h3 class="title is-4" style="text-align: left;">Unseen Link Length Extensions (Zero-shot)</h3>
         <div class="content has-text-justified">
           <p>
             During training time, we train on a variety of hands with joints and links removed. Despite never training on any link length variations, we observe that GET-Zero is able to still control a hand with 1.5cm extensions (shown in orange). In contrast, the baseline does not rotate the cube as fast and drops the cube more frequently.
@@ -147,7 +308,144 @@
               <p class="subtitle has-text-centered right">ET (Baseline) - 9 degrees/second</p>
             </div>
             <div class="clear"></div>
+            <p>
+              Compared to the best baseline, GET-Zero achieves a 10% improvement on zero-shot control of 10 embodiments with link length variations. We note that the embodiment graphs for these 10 embodiments were seen during training, but the link length extensions were not. Below, we show the results for GET-Zero on these embodiments in simulation. Orange indicates components with link length extensions.
+            </p>
+            <div id="results-carousel" class="carousel results-carousel">
+              <div class="item item-newlinklength1">
+                <video poster="" id="newlinklength1" autoplay muted loop playsinline height="100%">
+                  <source src="./static/videos/new_link_length/1.mp4"
+                          type="video/mp4">
+                </video>
+              </div>
+              <div class="item item-newlinklength2">
+                <video poster="" id="newlinklength2" autoplay muted loop playsinline height="100%">
+                  <source src="./static/videos/new_link_length/2.mp4"
+                          type="video/mp4">
+                </video>
+              </div>
+              <div class="item item-newlinklength3">
+                <video poster="" id="newlinklength3" autoplay muted loop playsinline height="100%">
+                  <source src="./static/videos/new_link_length/3.mp4"
+                          type="video/mp4">
+                </video>
+              </div>
+              <div class="item item-newlinklength4">
+                <video poster="" id="newlinklength4" autoplay muted loop playsinline height="100%">
+                  <source src="./static/videos/new_link_length/4.mp4"
+                          type="video/mp4">
+                </video>
+              </div>
+              <div class="item item-newlinklength5">
+                <video poster="" id="newlinklength5" autoplay muted loop playsinline height="100%">
+                  <source src="./static/videos/new_link_length/5.mp4"
+                          type="video/mp4">
+                </video>
+              </div>
+              <div class="item item-newlinklength6">
+                <video poster="" id="newlinklength6" autoplay muted loop playsinline height="100%">
+                  <source src="./static/videos/new_link_length/6.mp4"
+                          type="video/mp4">
+                </video>
+              </div>
+              <div class="item item-newlinklength7">
+                <video poster="" id="newlinklength7" autoplay muted loop playsinline height="100%">
+                  <source src="./static/videos/new_link_length/7.mp4"
+                          type="video/mp4">
+                </video>
+              </div>
+              <div class="item item-newlinklength8">
+                <video poster="" id="newlinklength8" autoplay muted loop playsinline height="100%">
+                  <source src="./static/videos/new_link_length/8.mp4"
+                          type="video/mp4">
+                </video>
+              </div>
+              <div class="item item-newlinklength9">
+                <video poster="" id="newlinklength9" autoplay muted loop playsinline height="100%">
+                  <source src="./static/videos/new_link_length/9.mp4"
+                          type="video/mp4">
+                </video>
+              </div>
+              <div class="item item-newlinklength10">
+                <video poster="" id="newlinklength10" autoplay muted loop playsinline height="100%">
+                  <source src="./static/videos/new_link_length/10.mp4"
+                          type="video/mp4">
+                </video>
+              </div>
+            </div>
+            <p class="subtitle has-text-centered">GET-Zero zero-shot to link length extensions (orange)</p>
         </div>
+
+        <!-- Unseen graph and link length -->
+        <h3 class="title is-4" style="text-align: left;">Unseen Graph and Link Length Extensions (Zero-shot)</h3>
+        <div class="content has-text-justified">
+          <p>
+            The most challenging test case is performing zero-shot control of an embodiment with both unseen graph structure and link length extensions present. Across 10 embodiments with these variations, we find that GET-Zero achieves a 20% performance improvement over the best performing baseline. However, we do observe challenges in the sim-to-real transfer for these embodiments (see failure cases section). Here we show GET-Zero in simulation for these 10 embodiments.
+          </p>
+          <div id="results-carousel" class="carousel results-carousel">
+            <div class="item item-newgraphandlinklength1">
+              <video poster="" id="newgraphandlinklength1" autoplay muted loop playsinline height="100%">
+                <source src="./static/videos/new_graph_and_link_length/1.mp4"
+                        type="video/mp4">
+              </video>
+            </div>
+            <div class="item item-newgraphandlinklength2">
+              <video poster="" id="newgraphandlinklength2" autoplay muted loop playsinline height="100%">
+                <source src="./static/videos/new_graph_and_link_length/2.mp4"
+                        type="video/mp4">
+              </video>
+            </div>
+            <div class="item item-newgraphandlinklength3">
+              <video poster="" id="newgraphandlinklength3" autoplay muted loop playsinline height="100%">
+                <source src="./static/videos/new_graph_and_link_length/3.mp4"
+                        type="video/mp4">
+              </video>
+            </div>
+            <div class="item item-newgraphandlinklength4">
+              <video poster="" id="newgraphandlinklength4" autoplay muted loop playsinline height="100%">
+                <source src="./static/videos/new_graph_and_link_length/4.mp4"
+                        type="video/mp4">
+              </video>
+            </div>
+            <div class="item item-newgraphandlinklength5">
+              <video poster="" id="newgraphandlinklength5" autoplay muted loop playsinline height="100%">
+                <source src="./static/videos/new_graph_and_link_length/5.mp4"
+                        type="video/mp4">
+              </video>
+            </div>
+            <div class="item item-newgraphandlinklength6">
+              <video poster="" id="newgraphandlinklength6" autoplay muted loop playsinline height="100%">
+                <source src="./static/videos/new_graph_and_link_length/6.mp4"
+                        type="video/mp4">
+              </video>
+            </div>
+            <div class="item item-newgraphandlinklength7">
+              <video poster="" id="newgraphandlinklength7" autoplay muted loop playsinline height="100%">
+                <source src="./static/videos/new_graph_and_link_length/7.mp4"
+                        type="video/mp4">
+              </video>
+            </div>
+            <div class="item item-newgraphandlinklength8">
+              <video poster="" id="newgraphandlinklength8" autoplay muted loop playsinline height="100%">
+                <source src="./static/videos/new_graph_and_link_length/8.mp4"
+                        type="video/mp4">
+              </video>
+            </div>
+            <div class="item item-newgraphandlinklength9">
+              <video poster="" id="newgraphandlinklength9" autoplay muted loop playsinline height="100%">
+                <source src="./static/videos/new_graph_and_link_length/9.mp4"
+                        type="video/mp4">
+              </video>
+            </div>
+            <div class="item item-newgraphandlinklength10">
+              <video poster="" id="newgraphandlinklength10" autoplay muted loop playsinline height="100%">
+                <source src="./static/videos/new_graph_and_link_length/10.mp4"
+                        type="video/mp4">
+              </video>
+            </div>
+          </div>
+          <p class="subtitle has-text-centered">GET-Zero zero-shot to unseen graph and link length extensions (orange)</p>
+      </div>
     </div>
     <!-- Result videos. -->
   </div>
@@ -167,13 +465,12 @@
           </p>
           <div id="wrapper"> 
             <div>
-              <p>The hand below has a missing index finger that creates a gap where the cube can fall through. This compounds any control errors which can come from the fact that link length extensions were never seen during training.</p>
+              <p>The hand below (unseen graph and link length extensions) has a missing index finger that creates a gap where the cube can fall through. This compounds any control errors which can come from the fact that link length extensions were never seen during training.</p>
             </div>
-            <video id="home3" autoplay muted loop playsinline> 
+            <video id="home3" autoplay muted loop playsinline style="margin-top: 10px; margin-bottom: 5px;"> 
                 <source type="video/mp4" src="./static/videos/get_ar_tag/584.mp4" /> 
             </video>
-            <div class="clear"></div> 
-            <div class="clear"></div>
+            <p class="subtitle has-text-centered">Falling cube (GET-Zero + unseen graph and link length extensions)</p>
         </div>
 
         <br>
@@ -182,13 +479,12 @@
         <div class="content has-text-justified">
           <div id="wrapper"> 
             <div>
-              <p style="margin-bottom: 7px;">Next, a hand with many link length extensions and a graph structure not seen during training has difficulty stabilizing the cube during the rotation cycle. This is partially due to a pinky finger that only has a single joint, making it difficult to start rotating the cube. Additionally, GET-Zero uses a proprioception-only input (no explicit cube state) to minimize the sim-to-real gap, but this makes it challenging for the policy to adapt to repeated failures.</p>
+              <p style="margin-bottom: 7px;">Next, the hand below (also with unseen graph and link length extensions) has difficulty rotating the cube. This is partially due to a pinky finger that only has a single joint, making it difficult to start the rotation cycle. Additionally, GET-Zero uses a proprioception-only input (no visual input nor explicit cube state provided) to minimize the sim-to-real gap, but this makes it challenging for the policy to adapt to repeated failures.</p>
             </div>
-            <video id="home3" autoplay muted loop playsinline> 
+            <video id="home3" autoplay muted loop playsinline style="margin-top: 10px; margin-bottom: 5px;"> 
                 <source type="video/mp4" src="./static/videos/get_ar_tag/585.mp4" /> 
             </video>
-            <div class="clear"></div> 
-            <div class="clear"></div>
+            <p class="subtitle has-text-centered">Stuck rotation cycle (GET-Zero + unseen graph and link length extensions)</p>
         </div>
     </div>
     <!-- Result videos. -->
